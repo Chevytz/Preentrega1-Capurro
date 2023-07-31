@@ -1,107 +1,78 @@
-// Pre entrega 1 - Es un simulador de toma de pedidos para una distribuidora para kioscos.
+// Pre entrega 2 - Es un simulador de toma de pedidos para una pizzeria chévere
 
-console.log ("Pre entrega 1 - Capurro")
+console.log ("Pre entrega 2 - Capurro")
 
-// Variables
-const valorCaramelos = 5;
-const valorAlfajores = 30;
-const valorPackAgua = 50;
-const valorGalletitas = 25;
+// Proceso inicial
 
-// Proceso Inicial
-
-alert ("Bienvenido a Distribuidora SC");
+alert ("Bienvenido a pizzeria Chévere")
 const usuario = prompt("Ingrese su usuario por favor");
-const dniCuit = prompt("Ingrese su dni/cuit");
-let validacionsocio = prompt("Es socio? Ingrese 'si' o 'no'");
+const dniCuit = prompt("Ingrese su dni/cuit para facturación");
+let habitue = prompt("Es cliente habitué? Ingrese 'si' o 'no'");
 
-// Uso del while para agitar la membresia (El bucle mas triste de la life, lo se)
-while (validacionsocio != "si") {
-    console.log ("No Socio, hay que intentar fidelizar. Pilas");
-    alert("No sos socio? Sabias que registrandote te hacemos un 10% de descuento?");
-    break;
-} 
+// Armado del menú usando un array de objetos
 
-console.log ("Distribuidora SC");
-console.log ("Pedido de " + usuario + " / Datos de facturacion: " + dniCuit);
-alert ("De momento contamos con stock de Caramelos GulaGula a $5, Alfajores Chocor a $30, Packs de agua Vida a $50 y Galletitas LEGALLET a $25");
+const pizzas = [
+    { num: 1, nombre: 'Mozzarella', precio: 550 },
+    { num: 2, nombre: 'Jamón', precio: 650 },
+    { num: 3, nombre: 'Hongos', precio: 700 },
+    { num: 4, nombre: 'Aceitunas', precio: 600 },
+    { num: 5, nombre: 'Provolone', precio: 750 },
+    { num: 6, nombre: 'Margarita', precio: 600 },
+    { num: 7, nombre: 'Ananá', precio: 700 },
+    { num: 8, nombre: 'Crudo y rúcula', precio: 750 },
+  ];
 
-//Toma de pedido
+// Exhibición del menú (Usando función flecha de orden superior en map y \n para separar interlinea)
 
-const cantidadCaramelos = parseInt(prompt("Cuantos caramelos quiere llevar? (A $5 c/u)"));
-alert ("Entonces serian $" + (cantidadCaramelos * valorCaramelos));
-const pedidoCaramelos = parseInt(cantidadCaramelos*valorCaramelos);
-console.log ("Caramelos: " + cantidadCaramelos + "--- $" +(cantidadCaramelos * valorCaramelos));
+alert("Gracias por elegirnos, si no lo es ya, sabemos que se volverá habitué y tendrá 10% off")
+alert("Menú de Pizzas:\n" + pizzas.map(pizza => `${pizza.num}. ${pizza.nombre} - $${pizza.precio}`).join("\n"));
 
-const cantidadAlfajores = parseInt(prompt("Cuantos alfajores quiere llevar? (A $30 c/u)"));
-alert ("Entonces serian $" + (cantidadAlfajores * valorAlfajores));
-const pedidoAlfajores = parseInt (cantidadAlfajores * valorAlfajores);
-console.log ("Caramelos: " + cantidadAlfajores + "--- $" +(cantidadAlfajores * valorAlfajores));
+// Guardado del pedido usando un objeto y dentro un array (al revés)
 
-const cantidadPackAgua = parseInt(prompt("Cuantos packs de agua quiere llevar? (A $50 c/u)"));
-alert ("Entonces serian $" + (cantidadPackAgua * valorPackAgua));
-const pedidoPackAgua = parseInt (cantidadPackAgua * valorPackAgua);
-console.log ("Caramelos: " + cantidadPackAgua + "--- $" +(cantidadPackAgua * valorPackAgua));
+let pedidoActual = {
+    nombreCliente: "",
+    pizzas: [],
+    total: 0,
+  };
 
-const cantidadGalletitas = parseInt(prompt("Cuantas galletitas quiere llevar? (A $25 c/u)"));
-alert ("Entonces serian $" + (cantidadGalletitas * valorGalletitas));
-const pedidoGalletitas = parseInt (cantidadGalletitas * valorGalletitas);
-console.log ("Caramelos: " + cantidadGalletitas + "--- $" +(cantidadGalletitas * valorGalletitas));
-
-// Suma del pedido
-
-const valorPedido = parseInt(pedidoCaramelos + pedidoAlfajores + pedidoPackAgua + pedidoGalletitas);
-console.log ("El valor total es: $" + valorPedido);
-alert ("Muchas gracias, el valor de su pedido es de $" + valorPedido );
-
-//Uso de switch para calcular valor de envio
-
-alert ("Los valores de entrega son: CABA = $250 , Norte $ 400, Oeste $400, Sur $600");
-let zonaEntrega = prompt("Ingrese su zona de entrega: 'caba', 'norte', 'sur', 'oeste'");
-console.log ("La zona de entrega elegida es: " + zonaEntrega);
-let valorEntrega = 0
-
-    switch (zonaEntrega){
-    
-        case 'caba': 
-            valorEntrega = (250 + valorPedido);
-            alert("El valor de su pedido con la entrega elegida es de: $" + valorEntrega);
-            break;   
-        case 'norte':
-            valorEntrega = (400 + valorPedido);
-            alert("El valor de su pedido con la entrega elegida es de: $" + valorEntrega);
-            break;   
-        case 'sur':
-            valorEntrega = (600 + valorPedido);
-            alert("El valor de su pedido con la entrega elegida es de: $" + valorEntrega);
-            break;   
-        case 'oeste':
-            valorEntrega = (400 + valorPedido);
-            alert("El valor de su pedido con la entrega elegida es de: $" + valorEntrega);
-            break;              
-        default:
-            alert("Opcion invalida");
-            break;
-     } 
-     console.log ("Valor con entrega a zona " + zonaEntrega + " es de: $" + valorEntrega)
-
-//Uso de function para hacer la suma final
-let valorFinal = 0
-function socio () {
-    if (validacionsocio === 'si') {
-        alert ("Felicidades por ser socio tenes un 10% de descuento");
-        const descuento = valorEntrega * 0.1;
-        valorFinal = valorEntrega - descuento;
-        alert ("El valor final de tu pedido es de: " + valorFinal );
-        console.log ("El valor final del pedido es de: " + valorFinal);
+// Una función para cargar el pedido
+function tomarPedido() {
+    alert("A continuación, elegí las pizzas que querés y cuantas de cada una:");
+  
+    // Iteramos sobre el array de pizzas y solicitamos la cantidad deseada al cliente
+    pizzas.forEach((pizza) => {
+      const cantidad = parseInt(prompt(`¿Cuántas pizzas "${pizza.nombre}" a "${pizza.precio}" deseas? (Ingresa 0 si no deseas llevar esta pizza)`));
+      if (!isNaN(cantidad) && cantidad >= 0) {
+        pedidoActual.pizzas.push({ nombre: pizza.nombre, cantidad: cantidad, precio: pizza.precio });
+        pedidoActual.total += cantidad * pizza.precio;
+      }
+    });
+  
+    console.log("Pedido actual:");
+    console.log(pedidoActual);
+    esHabitue(pedidoActual.total); // Llamamos a la función esHabitue con el total del pedido como argumento
+  }
+  
+  tomarPedido();
+  
+  // Chequeo de membresía y aplicación de descuento (Func. de orden superior.)
+  
+  function esHabitue(valorPedido) {
+    if (habitue.toLocaleLowerCase() === "si") {
+      console.log("Este es nuestro, es habitué. Tiene un 10% de descuento.");
+      alert("Felicidades, sos habitué y tenés un 10% de descuento.");
+      const valorConDescuento = aplicarDescuento(valorPedido);
+      console.log("Total con descuento: $" + valorConDescuento);
+      alert("Total con descuento: $" + valorConDescuento);
+      alert("En media hora lo tenes, gracias por comer con nosotros!");
+    } else {
+      console.log("No es habitué - ¡necesitamos fidelizarlo!");
+      alert("No sos habitué? Sabías que como habitué tenés un 10% de descuento?");
+      alert("En media hora lo tenes, gracias por comer con nosotros!");
     }
-    if (validacionsocio === 'no') {
-        alert ("Como no vas a ser socio? No te hacemos el 10%");
-        alert ("Estas durmiendo");
-    }   
-}
-socio ();
-
-alert ("Gracias por comprar con nosotros. Tu pedido por valor de $"+ valorFinal + " sera despachado cuanto antes")
-console.log ("Pedido para: " + usuario + "  - Facturacion: " + dniCuit)
-console.log ("A despachar a zona " + zonaEntrega +" por valor total de " + valorFinal)
+  }
+  
+  function aplicarDescuento(valorPedido) {
+    const descuento = valorPedido * 0.1;
+    return valorPedido - descuento;
+  }
